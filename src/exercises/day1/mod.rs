@@ -20,7 +20,6 @@ fn _find_two_that_sum_to(numbers: &HashSet<u32>, sum_to: u32) -> Option<(u32, u3
         if number > &sum_to {
             continue;
         }
-        // SAFETY: no number in the input is > 2020, so this won't underflow
         let pair = sum_to - number;
         if numbers.contains(&pair) {
             return Some((*number, pair, number * pair));
@@ -32,7 +31,6 @@ fn _find_two_that_sum_to(numbers: &HashSet<u32>, sum_to: u32) -> Option<(u32, u3
 
 fn _find_three_that_sum_to(numbers: &HashSet<u32>, sum_to: u32) -> Option<(u32, u32, u32, u32)> {
     for number in numbers {
-        // SAFETY: no number in the input is > 2020, so this won't underflow
         let rest = sum_to - number;
         if let Some((number_b, number_c, product)) = _find_two_that_sum_to(&numbers, rest) {
             return Some((*number, number_b, number_c, product * number));
