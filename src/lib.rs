@@ -1,4 +1,4 @@
-mod exercises;
+pub mod exercises;
 
 #[cfg(test)]
 mod tests {

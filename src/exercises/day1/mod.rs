@@ -1,10 +1,7 @@
 use std::collections::HashSet;
 
-fn _find_two_that_sum_to(numbers: &HashSet<u32>, sum_to: u32) -> Option<(u32, u32, u32)> {
-    for number in numbers {
-        if number > &sum_to {
-            continue;
-        }
+pub fn find_two_that_sum_to(numbers: &HashSet<u32>, sum_to: u32) -> Option<(u32, u32, u32)> {
+    for number in numbers.iter().filter(|num| num < &&sum_to) {
         let pair = sum_to - number;
         if numbers.contains(&pair) {
             return Some((*number, pair, number * pair));
@@ -14,10 +11,10 @@ fn _find_two_that_sum_to(numbers: &HashSet<u32>, sum_to: u32) -> Option<(u32, u3
     None
 }
 
-pub fn _find_three_that_sum_to(numbers: &HashSet<u32>, sum_to: u32) -> Option<(u32, u32, u32, u32)> {
+pub fn find_three_that_sum_to(numbers: &HashSet<u32>, sum_to: u32) -> Option<(u32, u32, u32, u32)> {
     for number in numbers {
-        let rest = sum_to - number;
-        if let Some((number_b, number_c, product)) = _find_two_that_sum_to(&numbers, rest) {
+        let difference = sum_to - number;
+        if let Some((number_b, number_c, product)) = find_two_that_sum_to(&numbers, difference) {
             return Some((*number, number_b, number_c, product * number));
         }
     }
@@ -28,7 +25,7 @@ pub fn _find_three_that_sum_to(numbers: &HashSet<u32>, sum_to: u32) -> Option<(u
 
 #[cfg(test)]
 mod tests {
-    use crate::exercises::day1::{_find_two_that_sum_to, _find_three_that_sum_to};
+    use crate::exercises::day1::{find_two_that_sum_to, find_three_that_sum_to};
     use std::collections::HashSet;
     use std::fs::File;
     use std::io::Read;
@@ -49,7 +46,7 @@ mod tests {
     #[test]
     fn day_1a_works() {
         let numbers = _read_input();
-        let output = _find_two_that_sum_to(&numbers, 2020).expect("There to be two such numbers");
+        let output = find_two_that_sum_to(&numbers, 2020).expect("There to be two such numbers");
         assert_eq!(output.0 + output.1, 2020);
         assert_eq!(output.0 * output.1, output.2);
         eprintln!("Output 1a: {}", output.2);
@@ -58,7 +55,7 @@ mod tests {
     #[test]
     fn day_1b_works() {
         let numbers = _read_input();
-        let output = _find_three_that_sum_to(&numbers, 2020).expect("There to be three such numbers");
+        let output = find_three_that_sum_to(&numbers, 2020).expect("There to be three such numbers");
         assert_eq!(output.0 + output.1 + output.2, 2020);
         assert_eq!(output.0 * output.1 * output.2, output.3);
         eprintln!("Output 1b: {}", output.3);
