@@ -2,7 +2,7 @@ pub fn find_two_that_sum_to(numbers: &[u32], sum_to: u32) -> Option<(u32, u32, u
     for (index, number) in numbers.iter().filter(|num| num < &&sum_to).enumerate() {
         let difference = sum_to - number;
         // check to see if `difference` is in `numbers` with this `number` ignored.
-        if numbers[..index].contains(&difference) || numbers[index+1..].contains(&difference) {
+        if numbers[index+1..].contains(&difference) {
             return Some((*number, difference, number * difference));
         }
     }
@@ -14,9 +14,7 @@ pub fn find_three_that_sum_to(numbers: &[u32], sum_to: u32) -> Option<(u32, u32,
     for (index, number) in numbers.iter().filter(|num| num < &&sum_to).enumerate() {
         let difference = &sum_to - number;
         // check to see if `difference` is in `numbers` with this `number` ignored.
-        if let Some((number_b, number_c, product)) = find_two_that_sum_to(&numbers[..index], difference) {
-            return Some((*number, number_b, number_c, product * number));
-        } else if let Some((number_b, number_c, product)) = find_two_that_sum_to(&numbers[index+1..], difference) {
+        if let Some((number_b, number_c, product)) = find_two_that_sum_to(&numbers[index+1..], difference) {
             return Some((*number, number_b, number_c, product * number));
         }
     }
