@@ -1,4 +1,7 @@
-pub fn find_two_that_sum_to(numbers: &[u32], sum_to: u32) -> Option<(u32, u32, u32)> {
+type TwoNumbersAndTheirProduct = (u32, u32, u32);
+/// Finds two numbers in `numbers` that sum to `sum_to` and returns those two
+/// numbers and their product (in that order).
+pub fn find_two_that_sum_to(numbers: &[u32], sum_to: u32) -> Option<TwoNumbersAndTheirProduct> {
     for (index, number) in numbers.iter().filter(|num| num < &&sum_to).enumerate() {
         let difference = sum_to - number;
         // check to see if `difference` is in `numbers` with this `number` ignored.
@@ -10,7 +13,10 @@ pub fn find_two_that_sum_to(numbers: &[u32], sum_to: u32) -> Option<(u32, u32, u
     None
 }
 
-pub fn find_three_that_sum_to(numbers: &[u32], sum_to: u32) -> Option<(u32, u32, u32, u32)> {
+type ThreeNumbersAndTheirProduct = (u32, u32, u32, u32);
+/// Finds three numbers in `numbers` that sum to `sum_to` and returns those
+/// three numbers and their product (in that order).
+pub fn find_three_that_sum_to(numbers: &[u32], sum_to: u32) -> Option<ThreeNumbersAndTheirProduct> {
     for (index, number) in numbers.iter().filter(|num| num < &&sum_to).enumerate() {
         let difference = &sum_to - number;
         // check to see if `difference` is in `numbers` with this `number` ignored.
