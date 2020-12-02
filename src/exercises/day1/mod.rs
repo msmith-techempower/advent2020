@@ -48,7 +48,7 @@ mod tests {
         let output = find_two_that_sum_to(&numbers, 2020).expect("There to be two such numbers");
         assert_eq!(output.0 + output.1, 2020);
         assert_eq!(output.0 * output.1, output.2);
-        eprintln!("Output 1a: {}", output.2);
+        assert_eq!(646779, output.2);
     }
 
     #[test]
@@ -57,6 +57,6 @@ mod tests {
         let output = find_three_that_sum_to(&numbers, 2020).expect("There to be three such numbers");
         assert_eq!(output.0 + output.1 + output.2, 2020);
         assert_eq!(output.0 * output.1 * output.2, output.3);
-        eprintln!("Output 1b: {}", output.3);
+        assert_eq!(246191688, output.3);
     }
 }

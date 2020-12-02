@@ -9,8 +9,7 @@ pub struct Day2APasswordPolicy {
 pub fn count_valid_day_2a_passwords(policies: &[Day2APasswordPolicy]) -> u32 {
     let mut to_ret: u32 = 0;
     for policy in policies {
-        let count = policy.password.matches(policy.char).count();
-        if count <= policy.max && count >= policy.min {
+        if (policy.min..policy.max+1).contains(&policy.password.matches(policy.char).count()) {
             to_ret += 1;
         }
     }
@@ -23,9 +22,7 @@ pub fn count_valid_day_2b_passwords(policies: &[Day2BPasswordPolicy]) -> u32 {
     for policy in policies {
         let pos_1 = policy.password.chars().nth(policy.pos_1 - 1).expect("String is long enough");
         let pos_2 = policy.password.chars().nth(policy.pos_2 - 1).expect("String is long enough");
-        if pos_1 == policy.char && pos_2 != policy.char {
-            to_ret += 1;
-        } else if pos_1 != policy.char && pos_2 == policy.char {
+        if (pos_1 == policy.char) ^ (pos_2 == policy.char) {
             to_ret += 1;
         }
     }
