@@ -42,17 +42,7 @@ mod tests {
     use crate::exercises::day3::{
         count_number_of_trees_encountered, is_tree_at_location, Grid, GridMethods,
     };
-    use std::fs::File;
-    use std::io::Read;
-
-    fn read_input(file: &str) -> String {
-        let mut file = File::open(file).expect("File exists and can be opened");
-        let mut contents = String::new();
-        file.read_to_string(&mut contents)
-            .expect("Can read and is valid text");
-
-        contents
-    }
+    use crate::utils::read_input;
 
     // Example input:
     //  key:
