@@ -10,7 +10,7 @@ pub struct Passport {
     cid: Option<String>, // (Country ID)
 }
 impl Passport {
-    fn is_valid_4a(&self) -> bool {
+    pub fn is_valid_4a(&self) -> bool {
         self.byr.is_some()
             && self.iyr.is_some()
             && self.eyr.is_some()
@@ -22,7 +22,7 @@ impl Passport {
         // self.cid.is_some()
     }
 
-    fn is_valid_4b(&self) -> bool {
+    pub fn is_valid_4b(&self) -> bool {
         self.is_valid_4a()
             && self.is_valid_birth_year()
             && self.is_valid_issue_year()
@@ -35,7 +35,7 @@ impl Passport {
     }
 
     /// byr (Birth Year) - four digits; at least 1920 and at most 2002.
-    fn is_valid_birth_year(&self) -> bool {
+    pub fn is_valid_birth_year(&self) -> bool {
         if let Some(birth_year) = &self.byr {
             if let Ok(birth_year) = str::parse::<i32>(birth_year) {
                 return (1920..2003).contains(&birth_year);
@@ -46,7 +46,7 @@ impl Passport {
     }
 
     /// iyr (Issue Year) - four digits; at least 2010 and at most 2020.
-    fn is_valid_issue_year(&self) -> bool {
+    pub fn is_valid_issue_year(&self) -> bool {
         if let Some(issue_year) = &self.iyr {
             if issue_year.len() == 4 {
                 if let Ok(issue_year) = str::parse::<i32>(issue_year) {
@@ -59,7 +59,7 @@ impl Passport {
     }
 
     /// eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
-    fn is_valid_expiration_year(&self) -> bool {
+    pub fn is_valid_expiration_year(&self) -> bool {
         if let Some(expiration_year) = &self.eyr {
             if expiration_year.len() == 4 {
                 if let Ok(expiration_year) = str::parse::<i32>(expiration_year) {
@@ -74,7 +74,7 @@ impl Passport {
     /// hgt (Height) - a number followed by either cm or in:
     /// If cm, the number must be at least 150 and at most 193.
     /// If in, the number must be at least 59 and at most 76.
-    fn is_valid_height(&self) -> bool {
+    pub fn is_valid_height(&self) -> bool {
         if let Some(height) = &self.hgt {
             match &height[height.len() - 2..] {
                 "cm" => {
@@ -89,7 +89,7 @@ impl Passport {
     }
 
     /// hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
-    fn is_valid_hair_color(&self) -> bool {
+    pub fn is_valid_hair_color(&self) -> bool {
         if let Some(hair_color) = &self.hcl {
             if hair_color.starts_with('#') {
                 if hair_color.len() == 7 {
@@ -111,7 +111,7 @@ impl Passport {
     }
 
     /// ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
-    fn is_valid_eye_color(&self) -> bool {
+    pub fn is_valid_eye_color(&self) -> bool {
         if let Some(eye_color) = &self.ecl {
             return match eye_color.as_str() {
                 "amb" | "blu" | "brn" | "gry" | "grn" | "hzl" | "oth" => true,
@@ -123,7 +123,7 @@ impl Passport {
     }
 
     /// pid (Passport ID) - a nine-digit number, including leading zeroes.
-    fn is_valid_passport_id(&self) -> bool {
+    pub fn is_valid_passport_id(&self) -> bool {
         if let Some(passport_id) = &self.pid {
             if passport_id.len() == 9 {
                 return str::parse::<u32>(&passport_id).is_ok();
@@ -134,7 +134,7 @@ impl Passport {
     }
 
     /// cid (Country ID) - ignored, missing or not.
-    fn is_valid_country_id(&self) -> bool {
+    pub fn is_valid_country_id(&self) -> bool {
         true
     }
 }
