@@ -1,0 +1,10 @@
+pale turquoise bags contain no other bags.
+mirrored brown bags contain no other bags.
+shiny tomato bags contain 4 shiny teal bags.
+pale aqua bags contain 4 shiny tomato bags, 3 bright black bags.
+shiny gold bags contain 1 pale aqua bag.
+bright black bags contain 2 pale turquoise bags, 5 mirrored brown bags, 1 mirrored magenta bag, 4 dull lime bags.
+mirrored magenta bags contain 1 posh brown bag, 4 shiny teal bags, 2 shiny crimson bags.
+posh brown bags contain no other bags.
+shiny teal bags contain 2 pale turquoise bags.
+shiny crimson bags contain no other bags.
