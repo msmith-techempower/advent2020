@@ -59,8 +59,7 @@ mod test {
     }
 
     type LowHigh = (usize, usize);
-    fn find_range_than_sums_to(xmas: &Vec<usize>, our_number: usize) -> LowHigh {
-        let mut numbers = xmas.clone();
+    fn find_range_that_sums_to(mut numbers: Vec<usize>, our_number: usize) -> LowHigh {
         numbers.reverse();
 
         let our_index = numbers
@@ -105,7 +104,7 @@ mod test {
         let contents = read_input("src/exercises/day9/input.txt");
         let xmas = parse_input(&contents);
         let our_number = find_number(&xmas, 25, 25);
-        let value = find_range_than_sums_to(&xmas, our_number);
+        let value = find_range_that_sums_to(xmas, our_number);
 
         assert_eq!(59341885, value.0 + value.1);
     }
