@@ -71,10 +71,7 @@ mod test {
         let mut start_index = 0;
         let mut sum_numbers = vec![];
         let mut sum = 0;
-        loop {
-            if sum != 0 {
-                break;
-            }
+        while sum == 0 {
             start_index += 1;
             for num in &numbers[our_index + start_index..] {
                 sum += num;
@@ -89,14 +86,18 @@ mod test {
                 }
             }
         }
-        sum_numbers.sort();
+        let mut high = 0;
+        let mut low = std::usize::MAX;
+        for num in sum_numbers {
+            if *num < low {
+                low = *num;
+            }
+            if *num > high {
+                high = *num;
+            }
+        }
 
-        (
-            **sum_numbers.get(0).expect("Zeroeth element"),
-            **sum_numbers
-                .get(sum_numbers.len() - 1)
-                .expect("Lengthth element"),
-        )
+        (low, high)
     }
 
     #[test]
