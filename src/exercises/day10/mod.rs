@@ -130,7 +130,7 @@ pub mod a {
             let differentials = parse_differentials(&adapters, ending_differential);
 
             assert_eq!(
-                2368,
+                2_368,
                 *differentials.1.get(&1).expect("Differentials of 1")
                     * *differentials.1.get(&3).expect("Differentials of 3")
             )
@@ -192,7 +192,7 @@ pub mod b {
 
             let count = count_permutations(&adapters);
 
-            assert_eq!(19208, count);
+            assert_eq!(19_208, count);
         }
 
         #[test]
@@ -206,7 +206,7 @@ pub mod b {
 
             let count = count_permutations(&adapters);
 
-            assert_eq!(1727094849536, count);
+            assert_eq!(1_727_094_849_536, count);
         }
     }
 }
