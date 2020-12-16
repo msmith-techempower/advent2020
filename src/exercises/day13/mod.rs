@@ -49,7 +49,7 @@ pub mod b {
     mod tests {
         use crate::utils::read_input;
 
-        fn parse_input(contents: &str, starting_number: usize) -> usize {
+        fn parse_input(contents: &str) -> usize {
             let mut lines = contents.lines();
             // "The first line in your input is no longer relevant."
             lines.next();
@@ -86,7 +86,7 @@ pub mod b {
         #[test]
         fn example() {
             let contents = read_input("src/exercises/day13/example.txt");
-            let magic_number = parse_input(&contents, 1);
+            let magic_number = parse_input(&contents);
 
             assert_eq!(1_068_781, magic_number);
         }
@@ -94,7 +94,7 @@ pub mod b {
         #[test]
         fn example2() {
             let contents = read_input("src/exercises/day13/example_2.txt");
-            let magic_number = parse_input(&contents, 1);
+            let magic_number = parse_input(&contents);
 
             assert_eq!(3_417, magic_number);
         }
@@ -102,7 +102,7 @@ pub mod b {
         #[test]
         fn example3() {
             let contents = read_input("src/exercises/day13/example_3.txt");
-            let magic_number = parse_input(&contents, 1);
+            let magic_number = parse_input(&contents);
 
             assert_eq!(754_018, magic_number);
         }
@@ -110,7 +110,7 @@ pub mod b {
         #[test]
         fn example4() {
             let contents = read_input("src/exercises/day13/example_4.txt");
-            let magic_number = parse_input(&contents, 1);
+            let magic_number = parse_input(&contents);
 
             assert_eq!(779_210, magic_number);
         }
@@ -118,7 +118,7 @@ pub mod b {
         #[test]
         fn example5() {
             let contents = read_input("src/exercises/day13/example_5.txt");
-            let magic_number = parse_input(&contents, 1);
+            let magic_number = parse_input(&contents);
 
             assert_eq!(1_261_476, magic_number);
         }
@@ -126,14 +126,14 @@ pub mod b {
         #[test]
         fn example6() {
             let contents = read_input("src/exercises/day13/example_6.txt");
-            let magic_number = parse_input(&contents, 1);
+            let magic_number = parse_input(&contents);
 
             assert_eq!(1_202_161_486, magic_number);
         }
 
         #[test]
         fn input() {
-            let contents = read_input("src/exercises/day13/input.txt");
+            let _contents = read_input("src/exercises/day13/input.txt");
             // 230_000_000_000_000 - too low (according to the website)
             // 460_000_000_000_000 - too low  ^
 
