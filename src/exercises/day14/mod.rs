@@ -67,17 +67,8 @@ pub mod b {
         use std::collections::HashMap;
 
         fn find_addresses(mask: &str) -> Vec<u64> {
-            // eprintln!("Truth table");
-            // eprintln!("{}", &mask);
-            // eprintln!("-----------");
             let mut to_ret = vec![];
-            //   000000000000000000000000000000X1001X ->
-            // [
-            //   000000000000000000000000000000010010
-            //   000000000000000000000000000000110010
-            //   000000000000000000000000000000010011
-            //   000000000000000000000000000000110011
-            // ]
+
             let mask = mask.chars().collect::<Vec<char>>();
             let mut qbit_positions = vec![];
             for (index, char) in mask.iter().enumerate() {
@@ -99,22 +90,17 @@ pub mod b {
                 for index in 0..qbit_positions.len() {
                     mask[qbit_positions[index]] = val[index];
                 }
-                // eprintln!("addr: {}", mask.iter().collect::<String>());
-                to_ret.push(
-                    u64::from_str_radix(mask.iter().collect::<String>().as_str(), 2)
-                        .expect("Valid binary"),
-                )
+                let addr = u64::from_str_radix(mask.iter().collect::<String>().as_str(), 2)
+                    .expect("Valid binary");
+                to_ret.push(addr)
             }
-
-            // for num in &to_ret {
-            //     eprintln!("{}", format!("{:0>36}", format!("{:b}", num)));
-            // }
 
             to_ret
         }
 
         fn write(contents: &str, memory: &mut HashMap<u64, u64>) {
             let mut mask = String::new();
+            let mut mask_ord = String::new();
             for line in contents.lines() {
                 if line.starts_with("mask") {
                     for part in line.split(" = ") {
@@ -124,50 +110,37 @@ pub mod b {
                         mask = part.to_string();
                     }
                 } else {
-                    let mut _instruction_index = 0;
                     for (index, part) in line.split(" = ").enumerate() {
                         if index == 0 {
                             let mut instr = part.chars().rev().collect::<String>();
-                            // strip ']'
-                            instr.remove(0);
+                            instr.remove(0); // strip ']'
                             instr = instr.chars().rev().collect::<String>();
-                            _instruction_index =
-                                usize::from_str_radix(&instr[4..], 10).expect("Valid decimal");
-                            let chars = format!("{:0>36}", format!("{:b}", _instruction_index))
-                                .chars()
-                                .collect::<Vec<char>>();
-                            // eprintln!(
-                            //     "address: {}",
-                            //     format!("{:0>36}", format!("{:b}", instruction_index))
-                            // );
-                            // eprintln!("mask:    {}", mask);
-                            let mut mask_ord = vec![];
-                            for (index, char) in chars.iter().enumerate() {
+                            let instruction_index = format!(
+                                "{:0>36}",
+                                format!(
+                                    "{:b}",
+                                    u64::from_str_radix(&instr[4..], 10).expect("Valid decimal")
+                                )
+                            );
+                            mask_ord = String::new();
+                            for (index, char) in instruction_index.chars().enumerate() {
                                 if mask.as_bytes()[index] as char == 'X' {
                                     mask_ord.push('X');
-                                } else if mask.as_bytes()[index] as char == '1' || *char == '1' {
-                                    mask_ord.push('1');
+                                } else if mask.as_bytes()[index] as char == '0' {
+                                    mask_ord.push(char);
                                 } else {
-                                    mask_ord.push('0');
+                                    mask_ord.push('1');
                                 }
                             }
-                            mask = mask_ord.iter().collect::<String>();
-
-                        // eprintln!("result:  {}", mask);
                         } else {
-                            // eprintln!("mask   : {}", mask);
-                            let addresses = find_addresses(&mask);
-                            // eprintln!("{:?}", addresses.len());
-                            // eprintln!("mem[{}] = {}", instruction_index, part);
-                            // eprintln!("----------------------------");
+                            let mut addresses = find_addresses(&mask_ord);
+                            addresses.sort();
                             for address in addresses {
-                                // eprintln!("mem[{}] = {}", address, part);
                                 memory.insert(
                                     address,
                                     str::parse::<u64>(part).expect("Valid decimal"),
                                 );
                             }
-                            // eprintln!();
                         }
                     }
                 }
@@ -198,10 +171,20 @@ pub mod b {
             let mut memory = HashMap::new();
             write(&contents, &mut memory);
 
-            eprintln!("{:?}", memory);
+            assert_eq!(
+                249_893_444_096,
+                memory.values().fold(0, |count, val| count + *val)
+            );
+        }
 
-            eprintln!(
-                "count: {}",
+        #[test]
+        fn example4() {
+            let contents = read_input("src/exercises/day14/example_b4.txt");
+            let mut memory = HashMap::new();
+            write(&contents, &mut memory);
+
+            assert_eq!(
+                1_952_292_532,
                 memory.values().fold(0, |count, val| count + *val)
             );
         }
@@ -213,7 +196,10 @@ pub mod b {
             write(&contents, &mut memory);
 
             // 2_449_384_529_160 - too low
-            eprintln!("{}", memory.values().fold(0, |count, val| count + *val));
+            assert_eq!(
+                3_443_997_590_975,
+                memory.values().fold(0, |count, val| count + *val)
+            );
         }
     }
 }
