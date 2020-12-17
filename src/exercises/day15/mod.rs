@@ -20,7 +20,6 @@ mod tests {
             }
         }
 
-        // while turn < 11 {
         while turn <= last_turn {
             let last = *spoken.get(&last_turn_value).unwrap();
             if last.1 == 0 {
